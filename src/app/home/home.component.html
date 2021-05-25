@@ -1,0 +1,48 @@
+<form class="promotion-form" [formGroup]="promotionApplicationForm" (submit)="onSubmit()">
+    <h2>Promotion Application Form</h2>
+    <label>
+        First Name:
+        <input type="text" formControlName="firstName" />
+        <ng-container *ngIf="isControlInvalid('firstName')">
+            <small *ngIf="isErrorExist('firstName', 'required')">A 'First Name' value is required</small>
+            <small *ngIf="isErrorExist('firstName', 'invalidName')">{{isErrorExist('firstName', 'invalidName')}}</small>
+        </ng-container>
+    </label>
+    <label>
+        Last Name:
+        <input type="text" formControlName="lastName" />
+        <small *ngIf="isControlInvalid('lastName')">A 'Last Name' value is required</small>
+    </label>
+    <label>
+        Address:
+        <input type="text" formControlName="address" />
+        <small *ngIf="isControlInvalid('address')">A 'Address' value is required</small>
+    </label>
+    <label>
+        Position
+        <input type="text" formControlName="position" />
+        <small *ngIf="isControlInvalid('position')">A 'Position' value is required</small>
+    </label>
+    <label>
+        Salary:
+        <input type="number" formControlName="salary" />
+        <small *ngIf="isControlInvalid('salary')">A 'Salary' value is required</small>
+    </label>
+    <!-- <label>
+        Reason:
+        <input type="text" formControlName="reason" />
+        <small *ngIf="isControlInvalid('reason')">A 'Reason' value is required</small>
+    </label> -->
+    <ng-container formArrayName='reason'>
+        <button type="button" (click)="addReason()">add reason</button>
+        <h5>Reasons</h5>
+        <div *ngFor="let reasonControl of reason.controls; index as i">
+            <textarea type="text" [formControlName]='i'> </textarea>
+            <small *ngIf="isResonInvalid(i)">A 'Address' value is required</small>
+
+        </div>
+    </ng-container>
+
+
+    <button [disabled]="!promotionApplicationForm" type="submit">Submit</button>
+</form>
